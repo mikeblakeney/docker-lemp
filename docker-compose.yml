@@ -19,7 +19,7 @@ php:
 app:
   image: busybox:latest
   volumes:
-    - .:/var/www/html
+    - ./app/:/var/www/html
 
 mysql:
   image: mysql:latest
