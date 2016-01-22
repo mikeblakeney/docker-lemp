@@ -1,0 +1,37 @@
+nginx:
+  build: ./nginx/
+  ports:
+    - "80:80"
+  links:
+    - php
+  volumes_from:
+    - app
+
+php:
+  build: ./php/
+  expose:
+    - 9000
+  links:
+    - mysql
+  volumes_from:
+    - app
+
+app:
+  image: busybox:latest
+  volumes:
+    - .:/var/www/html
+
+mysql:
+  image: mysql:latest
+  volumes_from:
+    - data
+  environment:
+    MYSQL_ROOT_PASSWORD: admin
+    MYSQL_DATABASE: app
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: password
+
+data:
+  image: busybox:latest
+  volumes:
+    - /var/lib/mysql
